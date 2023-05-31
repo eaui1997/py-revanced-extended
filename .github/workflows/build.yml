@@ -1,0 +1,68 @@
+name: Build Revanced Apps
+
+on:
+  workflow_dispatch:
+    inputs:
+      apps-to-build:
+        description: "Choose the apps to build"
+        required: true
+        default: '["youtube"]' # Change the default value to only YouTube
+
+jobs:
+  build-apps:
+    name: Build Apps
+    permissions: write-all
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{fromJson(github.event.inputs.apps-to-build)}}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java and Python
+        uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.3
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build ${{ matrix.app }}
+        run: python main.py ${{ matrix.app }} --exclude-patches custom-branding,enable-debugging,external-downloads,hide-autoplay-button,premium-heading # Add the exclude patches argument here
+
+      - name: Generate release info
+        run: | 
+          echo "
+          **Patches Changelog:** :point_down:
+          [Revanced](https://github.com/revanced/revanced-patches/releases/latest)
+          "> ${{ github.workspace }}-CHANGELOG.txt
+          
+      - name: Release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          files: |
+            revanced-cache/output-${{ matrix.app }}_signed.apk
+          name: Revanced
+          tag_name: all
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+          
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 0
+          keep_minimum_runs: 1
