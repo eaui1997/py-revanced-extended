@@ -40,28 +40,36 @@ class Downloader:
     def download_required(self):
         logger.info("Downloading required resources")
 
-        # Get the tool list
-        tools = self.client.get("https://releases.revanced.app/tools").json()
-
-        # Download the tools
-        download_repository = [
+        # Build the API urls
+        repositories = [
             "revanced/revanced-cli",
             "revanced/revanced-patches",
             "revanced/revanced-integrations",
         ]
+        api_urls = [
+            f"https://api.github.com/repos/{repo}/releases/latest"
+            for repo in repositories
+        ]
 
         downloaded_files = {}
 
-        for tool in tools["tools"]:
-            if tool["repository"] in download_repository:
-                filepath = self._download(tool["browser_download_url"], tool["name"])
+        for api_url, repo in zip(api_urls, repositories):
+            try:
+                response = self.client.get(api_url)
+                response.raise_for_status()
 
-                name = tool["repository"].replace("revanced/", "")
+                tools = response.json()
 
-                downloaded_files[name] = filepath
+                for tool in tools.get("assets", []):
+                    filepath = self._download(tool["browser_download_url"], tool["name"])
+                    name = repo.replace("revanced/", "")
+                    downloaded_files[name] = filepath
+
+            except requests.exceptions.HTTPError as err:
+                logger.error(f"Error downloading resources for {repo}: {err}")
+                continue
 
         return downloaded_files
-
     def download_apk(self, app_name: str):
         hasversion = False
 
