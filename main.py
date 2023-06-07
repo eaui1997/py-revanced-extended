@@ -6,9 +6,6 @@ from src.build import Build
 def main():
     parser = argparse.ArgumentParser("revanced_build")
 
-    # Target build app
-    parser.add_argument("app_name", help="Target build app", type=str)
-
     # Exclude Patches: patch1,patch2,patch3
     parser.add_argument(
         "--exclude-patches",
@@ -19,7 +16,9 @@ def main():
 
     args = parser.parse_args()
 
-    build = Build(args)
+    build_args = {"exclude_patches": "custom-branding-icon-afn-red,custom-branding-name,custom-video-speed,hide-mix-playlists"}
+
+    build = Build("youtube", **build_args)
 
     build.run_build()
 
