@@ -5,7 +5,7 @@ import sys
 from loguru import logger
 
 from src._config import config
-from src.downloader import Downloader
+#from src.downloader import Downloader
 from src.validation import Validation
 
 
@@ -15,8 +15,8 @@ class Build(object):
         if not os.path.exists(config["dist_dir"]):
             os.mkdir(config["dist_dir"])
 
-        Validation().check_keystore()
-        Validation().check_app_name(args.app_name)
+        #Validation().check_keystore()
+        #Validation().check_app_name(args.app_name)
 
         self.args = args
         self.check_java_version()
@@ -24,8 +24,8 @@ class Build(object):
         self.exclude_patches: str | None = self.args.exclude_patches
 
         # Validate the patches from exclude_patches, or if lowercase "none" is passed, skip
-        if self.exclude_patches is not None and self.exclude_patches.lower() != "none":
-            Validation().check_patch_from_args(self.exclude_patches)
+        #if self.exclude_patches is not None and self.exclude_patches.lower() != "none":
+            #Validation().check_patch_from_args(self.exclude_patches)
 
     def run_build(self):
         target_app = self.args.app_name.lower().strip()
