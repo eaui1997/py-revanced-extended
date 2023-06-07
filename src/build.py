@@ -5,8 +5,8 @@ import sys
 from loguru import logger
 
 from src._config import config
-#from src.downloader import Downloader
-from src.validation import Validation
+from src.downloader import Downloader
+#from src.validation import Validation
 
 
 class Build(object):
