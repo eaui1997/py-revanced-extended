@@ -1,12 +1,23 @@
 name: Build Revanced Apps
+
 on:
   workflow_dispatch:
+    inputs:
+      apps-to-build:
+        description: "Choose the apps to build"
+        required: true
+        default: '["youtube"]' # Change the default value to only YouTube
+
 jobs:
   build-apps:
     name: Build Apps
     permissions: write-all
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{fromJson(github.event.inputs.apps-to-build)}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -27,8 +38,8 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: Build YouTube
-        run: python main.py
+      - name: Build ${{ matrix.app }}
+        run: python main.py ${{ matrix.app }} --exclude-patches custom-branding-icon-afn-red,custom-branding-name,custom-video-speed,hide-mix-playlists # Add the exclude patches argument here
 
       - name: Generate release info
         run: | 
@@ -41,7 +52,7 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           files: |
-            revanced-cache/output-youtube_signed.apk
+            revanced-cache/output-${{ matrix.app }}_signed.apk
           name: Revanced
           tag_name: all
           body_path: ${{ github.workspace }}-CHANGELOG.txt
