@@ -39,7 +39,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build ${{ matrix.app }}
-        run: python main.py ${{ matrix.app }} --exclude-patches custom-branding-icon-afn-blue,custom-branding-youtube-name # Add the exclude patches argument here
+        run: python main.py ${{ matrix.app }} --exclude-patches custom-branding-icon-revancify-blue,custom-branding-youtube-name # Add the exclude patches argument here
 
       - name: Generate release info
         run: | 
