@@ -37,7 +37,7 @@ jobs:
         run: | 
           echo "
           **Patches Changelog:** :point_down:
-          [Revanced](https://github.com/revanced/revanced-patches/releases/latest)
+          [Revanced Extended](https://github.com/inotia00/revanced-patches/releases/latest)
           "> ${{ github.workspace }}-CHANGELOG.txt
           
       - name: Release
@@ -45,7 +45,7 @@ jobs:
         with:
           files: |
             revanced-cache/output-*_signed.apk
-          name: Revanced
+          name: Revanced Extended 
           tag_name: all
           body_path: ${{ github.workspace }}-CHANGELOG.txt
         env:
