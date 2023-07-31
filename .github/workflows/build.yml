@@ -37,7 +37,7 @@ jobs:
         run: | 
           echo "
           **Patches Changelog:** :point_down:
-          [Revanced Extended](https://github.com/inotia00/revanced-patches/releases/latest)
+          [Revanced](https://github.com/revanced/revanced-patches/releases/latest)
           "> ${{ github.workspace }}-CHANGELOG.txt
           
       - name: Release
