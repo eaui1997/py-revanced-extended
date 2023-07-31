@@ -14,7 +14,7 @@
     "value" : null
   } ]
 }, {
-  "patchName" : "enable-debugging",
+  "patchName" : "enable-android-debugging",
   "options" : [ {
     "key" : "debuggable",
     "value" : false
