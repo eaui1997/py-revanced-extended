@@ -2,9 +2,9 @@ import argparse
 
 from src.build import Build
 
-app_names = ["youtube", "youtube-music"]
-exclude_patches = ["custom-branding-icon-revancify-blue,custom-branding-youtube-name", ""]
-include_patches = ["custom-branding-icon-revancify-red", ""]
+app_names = ["youtube"]
+exclude_patches = ["custom-branding-icon-revancify-blue,custom-branding-youtube-name"]
+include_patches = ["custom-branding-icon-revancify-red"]
 
 for i in range(len(app_names)):
   
