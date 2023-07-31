@@ -2,7 +2,7 @@ import argparse
 
 from src.build import Build
 
-app_names = ["youtube", ""]
+app_names = ["youtube", "youtube-music"]
 exclude_patches = ["custom-branding-icon-revancify-blue,custom-branding-youtube-name", ""]
 include_patches = ["custom-branding-icon-revancify-red", ""]
 
