@@ -19,6 +19,8 @@ class Build(object):
         self.check_java_version()
         self.download_files = Downloader().download_required()
         self.exclude_patches: str | None = self.args.exclude_patches
+        # Add this line to include patches
+        self.include_patches: str | None = self.args.include_patches
 
 
     def run_build(self):
@@ -31,6 +33,12 @@ class Build(object):
         # patch1,patch2 to --exclude=patch1 --exclude=patch2
         exclude_patches = sum(
             [["--exclude", s.strip()] for s in self.args.exclude_patches.split(",")],
+            [],
+        )
+
+        # Add this code to include patches
+        include_patches = sum(
+            [["--include", s.strip()] for s in self.args.include_patches.split(",")],
             [],
         )
 
@@ -51,6 +59,7 @@ class Build(object):
                 "--keystore",
                 config["keystore_path"],
                 *exclude_patches,
+                *include_patches,
             ]
             + sum(
                 [
@@ -91,3 +100,4 @@ class Build(object):
             exit(1)
 
         logger.success("Java 17 is installed")
+        
