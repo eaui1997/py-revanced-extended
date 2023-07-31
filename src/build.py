@@ -19,7 +19,6 @@ class Build(object):
         self.check_java_version()
         self.download_files = Downloader().download_required()
         self.exclude_patches: str | None = self.args.exclude_patches
-        # Add this line to include patches
         self.include_patches: str | None = self.args.include_patches
 
 
@@ -36,7 +35,7 @@ class Build(object):
             [],
         )
 
-        # Add this code to include patches
+        # patch3,patch4 to --include=patch3 --include=patch4
         include_patches = sum(
             [["--include", s.strip()] for s in self.args.include_patches.split(",")],
             [],
