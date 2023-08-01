@@ -9,7 +9,7 @@ exclude_patches = ["custom-branding-icon-revancify-blue,custom-branding-youtube-
 include_patches = ["custom-branding-icon-revancify-red"]
 
 # Define the repositories to check
-repo1 = "$GITHUB_REPOSITORY"
+repo1 = "manhduonghn/py-revanced"
 repo2 = "inotia00/revanced-patches"
 
 # Define the time threshold for assets in days
