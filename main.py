@@ -52,11 +52,11 @@ for i in range(len(app_names)):
                     build.run_build()
                 else:
                     # The asset is too old, skip the app
-                    print(f"Skipping {app_name} because the asset of {repo2} is older than {time_threshold} day(s)")
+                    print(f"Skipping patch {app_name} because the asset of {repo2} is older than {time_threshold} day(s)")
             else:
                 # There are no assets, skip the app
-                print(f"Skipping {app_name} because there are no assets in {repo2}")
+                print(f"Skipping patch {app_name} because there are no assets in {repo2}")
         else:
             # There is no latest release, skip the app
-            print(f"Skipping {app_name} because there is no latest release in {repo2}")
+            print(f"Skipping patch {app_name} because there is no latest release in {repo2}")
           
