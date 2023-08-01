@@ -58,5 +58,5 @@ for i in range(len(app_names)):
                 print(f"Skipping patch {app_name} because there are no assets in {repo2}")
         else:
             # There is no latest release, skip the app
-            print(f"Skipping patch {app_name} because there is no latest release in {repo2}")
+            print(f"Skipping patch {app_name} because there is available latest release in {repo1}")
           
