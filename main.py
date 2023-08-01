@@ -23,12 +23,11 @@ for i in range(len(app_names)):
 
     args = argparse.Namespace(app_name=app_name, exclude_patches=exclude_patch, include_patches=include_patch)
 
-    build = Build(args)
-
     # Check the release status of repo1
     response1 = requests.head(f"https://api.github.com/repos/{repo1}/releases/latest")
     if response1.status_code == 404:
         # No latest release, build the app
+        build = Build(args)
         build.run_build()
     else:
         # There is a latest release, check the release status of repo2
@@ -49,6 +48,7 @@ for i in range(len(app_names)):
                 difference = (current_time - published_time).days
                 if difference <= time_threshold:
                     # The asset is published within the time threshold, build the app
+                    build = Build(args)
                     build.run_build()
                 else:
                     # The asset is too old, skip the app
