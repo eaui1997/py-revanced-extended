@@ -1,8 +1,11 @@
 name: Build Revanced Apps
 
 on:
+  schedule:
+
+    - cron: "0 0 * * *"
   workflow_dispatch:
-    
+
 jobs:
   build-apps:
     name: Build Apps
