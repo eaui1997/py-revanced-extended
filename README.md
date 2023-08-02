@@ -1,7 +1,7 @@
 # This repository is edited and the code is taken from [ckt1031/revanced-build-script](https://github.com/ckt1031/revanced-build-script)
 
 # Add features
-- Build Revanced Extended
+- Build YouTube Revanced Extended (change sources to build Revanced)
 - Rip Lib
 - Options Patches
 - Auto check and build every day 
