@@ -7,7 +7,7 @@ from src.build import Build
 
 app_names = ["youtube"]
 exclude_patches = ["custom-branding-icon-revancify-blue"]
-include_patches = ["custom-branding-icon-revancify-red"]
+include_patches = ["custom-branding-icon-mmt"]
 
 # Define the repositories to check
 repo1 = os.environ["GITHUB_REPOSITORY"]
