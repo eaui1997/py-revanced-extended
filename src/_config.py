@@ -1,7 +1,7 @@
 config = {
     "dist_dir": "revanced-dist",
     "keystore_path": "./keystore/default.keystore",
-    "options_path" : "./options/options.toml",
+    "options_path": "./options/options.toml",
 }
 
 app_reference = {
