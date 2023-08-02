@@ -58,7 +58,7 @@ class Build(object):
                 "--keystore",
                 config["keystore_path"],
                 "--options",
-                "./options/options.toml",
+                config["options_path"],
                 "--rip-lib",
                 "x86",
                 "--rip-lib",
