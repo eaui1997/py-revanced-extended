@@ -60,9 +60,11 @@ class Build(object):
                 "--options",
                 "./options/options.toml",
                 "--rip-lib",
+                "x86",
+                "--rip-lib",
                 "x86_64",
                 "--rip-lib",
-                "x86",
+                "armeabi-v7a",
                 *exclude_patches,
                 *include_patches,
             ]
