@@ -44,7 +44,7 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           files: |
-            revanced-cache/output-*_signed.apk
+            revanced-cache/*_signed.apk
           name: Revanced Extended 
           tag_name: all
           body_path: ${{ github.workspace }}-CHANGELOG.txt
