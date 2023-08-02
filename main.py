@@ -6,7 +6,7 @@ import requests
 from src.build import Build
 
 app_names = ["youtube"]
-exclude_patches = ["custom-branding-icon-revancify-blue,custom-branding-youtube-name"]
+exclude_patches = ["custom-branding-icon-revancify-blue"]
 include_patches = ["custom-branding-icon-revancify-red"]
 
 # Define the repositories to check
