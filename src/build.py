@@ -57,6 +57,12 @@ class Build(object):
                 self.download_files["revanced-integrations"],
                 "--keystore",
                 config["keystore_path"],
+                "--options",
+                "./src/options.toml",
+                "--rip-lib",
+                "x86_64",
+                "--rip-lib",
+                "x86",
                 *exclude_patches,
                 *include_patches,
             ]
