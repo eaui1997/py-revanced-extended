@@ -1,17 +1,15 @@
 import argparse
 import datetime
 import requests
-import os
 
 from src.build import Build
 
 app_names = ["youtube"]
 exclude_patches = ["custom-branding-icon-revancify-blue,custom-branding-youtube-name"]
 include_patches = ["custom-branding-icon-revancify-red"]
-github_repository = os.environ.get("GITHUB_REPOSITORY")
 
 # Define the repositories to check
-repo1 = "github_repository"
+repo1 = "manhduonghn/py-revanced"
 repo2 = "inotia00/revanced-patches"
 
 # Define the time threshold for assets in days
@@ -25,12 +23,11 @@ for i in range(len(app_names)):
 
     args = argparse.Namespace(app_name=app_name, exclude_patches=exclude_patch, include_patches=include_patch)
 
-    build = Build(args)
-
     # Check the release status of repo1
     response1 = requests.head(f"https://api.github.com/repos/{repo1}/releases/latest")
     if response1.status_code == 404:
         # No latest release, build the app
+        build = Build(args)
         build.run_build()
     else:
         # There is a latest release, check the release status of repo2
@@ -51,14 +48,15 @@ for i in range(len(app_names)):
                 difference = (current_time - published_time).days
                 if difference <= time_threshold:
                     # The asset is published within the time threshold, build the app
+                    build = Build(args)
                     build.run_build()
                 else:
                     # The asset is too old, skip the app
-                    print(f"Skipping {app_name} because the asset of {repo2} is older than {time_threshold} day(s)")
+                    print(f"Skipping patch {app_name} because the asset of {repo2} is older than {time_threshold} day(s)")
             else:
                 # There are no assets, skip the app
-                print(f"Skipping {app_name} because there are no assets in {repo2}")
+                print(f"Skipping patch {app_name} because there are no assets in {repo2}")
         else:
             # There is no latest release, skip the app
-            print(f"Skipping {app_name} because there is no latest release in {repo2}")
+            print(f"Skipping patch {app_name} because there is available latest release in {repo1}")
           
