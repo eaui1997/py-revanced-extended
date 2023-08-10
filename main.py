@@ -5,7 +5,7 @@ import requests
 
 from src.build import Build
 
-app_names = "youtube"
+app_name = "youtube"
 exclude_patches = "custom-branding-icon-revancify-blue"
 include_patches = "custom-branding-icon-revancify-red"
 
