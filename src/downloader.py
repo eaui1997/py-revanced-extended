@@ -42,39 +42,29 @@ class Downloader:
         logger.info("Downloading required resources")
 
         # Build the API urls
-        users = [
-            "inotia00",
-            "inotia00",
-            "inotia00",
+        user_repo_tag = [
+            ("j-hc", "revanced-cli", "latest"),
+            ("revanced", "revanced-patches", "latest"),
+            ("revanced", "revanced-integrations", "latest"),
         ]
-        repositories = [
-            "revanced-cli",
-            "revanced-patches",
-            "revanced-integrations",
-        ]
-        tags = [
-            "latest",
-            "latest",
-            "latest",
-        ]
-    
+        users, repositories, tags = zip(*user_repo_tag)
         api_urls = [
             f"https://api.github.com/repos/{user}/{repo}/releases/{tag}"
-            for user, repo, tag in zip(users, repositories, tags)
+            for user, repo, tag in user_repo_tag
         ]
 
         downloaded_files = {}
 
-        for api_url, user_repo, tag in zip(api_urls, zip(users, repositories), tags):
+        for i, api_url in enumerate(api_urls):
             try:
                 response = self.client.get(api_url)
                 response.raise_for_status()
 
-                tools = response.json()
-            
-                user, repo = user_repo
-            
-                for tool in tools.get("assets", []):
+                tools = response.json().get("assets", [])
+        
+                user, repo, tag = user_repo_tag[i]
+        
+                for tool in tools:
                     filepath = self._download(tool["browser_download_url"], tool["name"])
                     name = repo.replace("user/", "")
                     downloaded_files[name] = filepath
@@ -83,7 +73,7 @@ class Downloader:
                 logger.error(f"Error downloading resources for {user}/{repo}: {err}")
                 continue
 
-        return downloaded_files
+        return downloaded_files            
 
     def download_apk(self, app_name: str):
         # Load from patches.json
@@ -112,3 +102,4 @@ class Downloader:
                         filename = f"{app_reference[app_name]['name']}-{version}.apk"
 
                         return self._download(href, filename)
+                    
