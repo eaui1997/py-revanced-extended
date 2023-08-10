@@ -4,13 +4,6 @@ import os
 import requests
 
 from src.build import Build
-from src.downloader import Downloader
-
-def main(users, repositories, tags):
-    downloader = Downloader()
-    downloaded_files = downloader.download_required(users, repositories, tags)
-    print(downloaded_files)
-
 
 app_name = "youtube"
 exclude_patches = "custom-branding-icon-revancify-blue"
@@ -22,10 +15,6 @@ repo2 = "inotia00/revanced-patches"
 
 # Define the time threshold for assets in hours
 time_threshold = 24
-
-users = ["inotia00", "inotia00"]
-repositories = ["revanced-cli", "revanced-integrations"]
-tags = ["latest", "latest"]
 
 args = argparse.Namespace(app_name=app_name, exclude_patches=exclude_patches, include_patches=include_patches)
 
@@ -65,6 +54,3 @@ else:
     else:
         # There is no latest release, skip the app
         print(f"Skipping patch {app_name} because there is available latest release in {repo1}")
-
-if __name__ == "__main__":
-    main(users, repositories, tags)
