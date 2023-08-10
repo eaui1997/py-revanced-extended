@@ -16,7 +16,7 @@ repo2 = "inotia00/revanced-patches"
 # Define the time threshold for assets in hours
 time_threshold = 24
 
-args = argparse.Namespace(app_name=app_name, exclude_patches=exclude_patch, include_patches=include_patch)
+args = argparse.Namespace(app_name=app_name, exclude_patches=exclude_patches, include_patches=include_patches)
 
 # Check the release status of repo1
 response1 = requests.head(f"https://api.github.com/repos/{repo1}/releases/latest")
