@@ -1,7 +1,7 @@
 import json
 import os
-
 import requests
+
 from loguru import logger
 
 from src._config import app_reference, config
@@ -21,18 +21,20 @@ class Downloader:
     def _download(self, url: str, name: str) -> str:
         filepath = f"./{config['dist_dir']}/{name}"
 
-        # Check if the tool exists
+        # Check if the file already exists
         if os.path.exists(filepath):
             logger.warning(f"{filepath} already exists, skipping")
             return filepath
 
         with self.client.get(url, stream=True) as res:
             res.raise_for_status()
+         
             with open(filepath, "wb") as file:
                 for chunk in res.iter_content(chunk_size=8192):
                     file.write(chunk)
 
         logger.success(f"{filepath} downloaded")
+        logger.info(f"Download link: {url}")
 
         return filepath
 
@@ -40,32 +42,45 @@ class Downloader:
         logger.info("Downloading required resources")
 
         # Build the API urls
-        repositories = [
-            "inotia00/revanced-cli",
-            "inotia00/revanced-patches",
-            "inotia00/revanced-integrations",
+        users = [
+            "inotia00",
+            "inotia00",
+            "inotia00",
         ]
+        repositories = [
+            "revanced-cli",
+            "revanced-patches",
+            "revanced-integrations",
+        ]
+        tags = [
+            "latest",
+            "latest",
+            "latest",
+        ]
+    
         api_urls = [
-            f"https://api.github.com/repos/{repo}/releases/latest"
-            for repo in repositories
+            f"https://api.github.com/repos/{user}/{repo}/releases/{tag}"
+            for user, repo, tag in zip(users, repositories, tags)
         ]
 
         downloaded_files = {}
 
-        for api_url, repo in zip(api_urls, repositories):
+        for api_url, user_repo, tag in zip(api_urls, zip(users, repositories), tags):
             try:
                 response = self.client.get(api_url)
                 response.raise_for_status()
 
                 tools = response.json()
-
+            
+                user, repo = user_repo
+            
                 for tool in tools.get("assets", []):
                     filepath = self._download(tool["browser_download_url"], tool["name"])
-                    name = repo.replace("inotia00/", "")
+                    name = repo.replace("user/", "")
                     downloaded_files[name] = filepath
 
             except requests.exceptions.HTTPError as err:
-                logger.error(f"Error downloading resources for {repo}: {err}")
+                logger.error(f"Error downloading resources for {user}/{repo}: {err}")
                 continue
 
         return downloaded_files
