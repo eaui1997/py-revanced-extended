@@ -38,26 +38,9 @@ class Downloader:
 
         return filepath
 
-    def download_required(self):
+    def download_required(self, users, repositories, tags):
         logger.info("Downloading required resources")
 
-        # Build the API urls
-        users = [
-            "inotia00",
-            "inotia00",
-            "inotia00",
-        ]
-        repositories = [
-            "revanced-cli",
-            "revanced-patches",
-            "revanced-integrations",
-        ]
-        tags = [
-            "latest",
-            "latest",
-            "latest",
-        ]
-    
         api_urls = [
             f"https://api.github.com/repos/{user}/{repo}/releases/{tag}"
             for user, repo, tag in zip(users, repositories, tags)
