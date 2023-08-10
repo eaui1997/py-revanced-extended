@@ -43,9 +43,9 @@ class Downloader:
 
         # Build the API urls
         user_repo_tag = [
-            ("j-hc", "revanced-cli", "latest"),
-            ("revanced", "revanced-patches", "latest"),
-            ("revanced", "revanced-integrations", "latest"),
+            ("inotia00", "revanced-cli", "latest"),
+            ("inotia00", "revanced-patches", "latest"),
+            ("inotia00", "revanced-integrations", "latest"),
         ]
         users, repositories, tags = zip(*user_repo_tag)
         api_urls = [
