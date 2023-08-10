@@ -4,6 +4,17 @@ import os
 import requests
 
 from src.build import Build
+from src.downloader import Downloader
+
+def main():
+    users = ["inotia00", "inotia00", "inotia00"]
+    repositories = ["revanced-cli", "revanced-patches", "revanced-integrations"]
+    tags = ["latest", "latest", "latest"]
+
+    downloader = Downloader()
+    downloaded_files = downloader.download_required(users, repositories, tags)
+    print(downloaded_files)
+
 
 app_name = "youtube"
 exclude_patches = "custom-branding-icon-revancify-blue"
