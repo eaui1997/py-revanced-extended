@@ -18,8 +18,8 @@ class Downloader:
         self.base_url = "https://api.github.com/repos"
         self.repositories = [
             {"user": "inotia00", "repo": "revanced-cli", "tag": "latest"},
-            {"user": "inotia00", "repo": "ReX-patches", "tag": "latest"},
-            {"user": "inotia00", "repo": "ReX-integrations", "tag": "latest"}
+            {"user": "YT-Advanced", "repo": "ReX-patches", "tag": "latest"},
+            {"user": "YT-Advanced", "repo": "ReX-integrations", "tag": "latest"}
         ]
 
     def _download(self, url: str, name: str) -> str:
